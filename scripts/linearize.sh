@@ -1,4 +1,6 @@
 #!/bin/bash
+##Source: https://stackoverflow.com/a/27940907/6000943
+
 input=$1
 output=linearized_$1
-awk '/^>/ {printf("%s%s\t",(N>0?"\n":""),$0);N++;next;} {printf("%s",$0);} END {printf("\n");}' < $input > $output
+awk '/^>/ { print (NR==1 ? "" : RS) $0; next } { printf "%s", $0 } END { printf RS }' $input > $output
